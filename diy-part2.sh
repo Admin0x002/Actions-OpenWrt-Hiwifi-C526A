@@ -10,13 +10,17 @@
 # Description: OpenWrt DIY script part 2 (After Update feeds)
 #
 
-# 管理地址
+# 1. 修改管理 IP
 sed -i 's/192.168.1.1/192.168.199.1/g' package/base-files/files/bin/config_generate
 
-# 默认主题设置
-# 注意：我们在 part1 中添加了 src-git argon，系统会自动下载到 feeds/argon/luci-theme-argon
-# 只需要确保编译菜单中选中它，并设置为默认即可
+# 2. 移除 Lean 源码自带的老旧 Argon 主题 (防止冲突)
+# Lean 的源码里有时会自带一个旧版本的 luci-theme-argon，必须删掉，否则编译会报错或不生效
+rm -rf package/lean/luci-theme-argon
+rm -rf feeds/luci/themes/luci-theme-argon
 
-# 强制替换 bootstrap 为 argon
+# 3. 拉取 Argon 主题 (严格按照官方文档：Build for Lean's LEDE project)
+# 注意：这里必须加 -b 18.06，否则你的固件进去后 CSS 会崩
+git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
+
+# 4. 替换默认主题为 Argon
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
-sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-nginx/Makefile

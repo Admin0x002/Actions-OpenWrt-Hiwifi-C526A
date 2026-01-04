@@ -19,6 +19,3 @@ sed -i '/passwall/d' feeds.conf.default
 # 2. 添加 PassWall 2 (后端 + 前端)
 echo "src-git passwall_packages https://github.com/xiaorouji/openwrt-passwall-packages.git;main" >> feeds.conf.default
 echo "src-git passwall_luci https://github.com/xiaorouji/openwrt-passwall2.git;main" >> feeds.conf.default
-
-# 3. 添加 Argon 主题源 (替代 Kenzo 中的 Argon)
-echo "src-git argon https://github.com/jerrykuku/luci-theme-argon.git;master" >> feeds.conf.default
