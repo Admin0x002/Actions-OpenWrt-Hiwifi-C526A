@@ -10,16 +10,13 @@
 # Description: OpenWrt DIY script part 2 (After Update feeds)
 #
 
-# Modify default IP
-#sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
-
-
-
 # 管理地址
 sed -i 's/192.168.1.1/192.168.199.1/g' package/base-files/files/bin/config_generate
 
-# 默认主题
-rm -rf feeds/kenzo/luci-theme-argon
+# 默认主题设置
+# 注意：我们在 part1 中添加了 src-git argon，系统会自动下载到 feeds/argon/luci-theme-argon
+# 只需要确保编译菜单中选中它，并设置为默认即可
+
+# 强制替换 bootstrap 为 argon
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-nginx/Makefile
-#sed -i 's/luci-theme-bootstrap/luci-theme-edge/g' feeds/luci/collections/luci/Makefile
